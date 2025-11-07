@@ -7,11 +7,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 @Entity
 public class Post {
 
@@ -26,7 +28,7 @@ public class Post {
     private String authorName;
 
     @Enumerated(EnumType.STRING)
-    private PostStatus postStatus = PostStatus.DRAFT;
+    private PostStatus status = PostStatus.DRAFT;
 
     @CreatedDate
     private LocalDateTime createdAt;
@@ -40,12 +42,11 @@ public class Post {
     }
 
     @Builder
-    public Post(String title, String content, PostStatus postStatus) {
+    public Post(String title, String content, String authorName, PostStatus status) {
         this.title = title;
         this.content = content;
-        this.postStatus = postStatus;
-        this.createdAt = LocalDateTime.now();
-        this.updatedAt = LocalDateTime.now();
+        this.status = status;
+        this.authorName = authorName;
     }
 
     public static Post form(PostRequest request) {
