@@ -54,16 +54,6 @@ server:
     include-stacktrace: on_param
     include-exception: false
 
-# SpringDoc (Swagger)
-springdoc:
-  api-docs:
-    path: /api-docs
-  swagger-ui:
-    path: /swagger-ui.html
-    operations-sorter: method
-    tags-sorter: alpha
-  show-actuator: false
-
 # JWT 설정 (Phase 2에서 사용)
 jwt:
   secret: your-secret-key-change-this-in-production-at-least-256-bits-long  # 최소 256비트
