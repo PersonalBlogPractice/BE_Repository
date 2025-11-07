@@ -1,0 +1,71 @@
+spring:
+  application:
+    name: practice
+
+  # Profile 설정
+  profiles:
+    active: local
+
+  # H2 Database
+  datasource:
+    url: jdbc:h2:mem:devblog
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+
+  # H2 Console (개발용)
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+  # JPA 설정
+  jpa:
+    hibernate:
+      ddl-auto: create-drop  # 개발: create-drop, 프로덕션: validate
+    show-sql: true  # SQL 로그 출력
+    properties:
+      hibernate:
+        format_sql: true  # SQL 포맷팅
+        highlight_sql: true  # SQL 하이라이트
+        use_sql_comments: true  # JPQL 주석 표시
+    open-in-view: false  # OSIV 비활성화 (권장)
+
+  # Jackson (JSON 직렬화)
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+    time-zone: Asia/Seoul
+
+# Logging
+logging:
+  level:
+    io.github.tato126.practice: DEBUG  # 애플리케이션 로그
+    org.hibernate.SQL: DEBUG  # SQL 로그
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE  # 파라미터 바인딩 로그
+    org.springframework.security: DEBUG  # Security 로그 (Phase 2 이후)
+
+# Server
+server:
+  port: 8080
+  error:
+    include-message: always
+    include-binding-errors: always
+    include-stacktrace: on_param
+    include-exception: false
+
+# SpringDoc (Swagger)
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: method
+    tags-sorter: alpha
+  show-actuator: false
+
+# JWT 설정 (Phase 2에서 사용)
+jwt:
+  secret: your-secret-key-change-this-in-production-at-least-256-bits-long  # 최소 256비트
+  access-token-expiration: 3600000  # 1시간 (밀리초)
+  refresh-token-expiration: 604800000  # 7일 (밀리초)
