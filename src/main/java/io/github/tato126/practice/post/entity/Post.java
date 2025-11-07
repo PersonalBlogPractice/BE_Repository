@@ -45,8 +45,8 @@ public class Post {
     public Post(String title, String content, String authorName, PostStatus status) {
         this.title = title;
         this.content = content;
-        this.status = status;
-        this.authorName = authorName;
+        this.authorName = (authorName != null) ? authorName : "nameIsNull";
+        this.status = (status != null) ? status : PostStatus.DRAFT;
     }
 
     public static Post form(PostRequest request) {

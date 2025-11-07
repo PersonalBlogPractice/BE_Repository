@@ -7,12 +7,14 @@ import io.github.tato126.practice.post.dto.response.PostResponse;
 import io.github.tato126.practice.post.entity.Post;
 import io.github.tato126.practice.post.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class PostService {
@@ -22,8 +24,11 @@ public class PostService {
     // 게시글 생성
     public PostResponse register(PostRequest request) {
 
+        log.debug("request : " + request.toString());
         // request -> entity
         Post newPost = Post.form(request);
+
+        log.debug("newPost: " + newPost.toString());
 
         // repository save
         postRepository.save(newPost);
