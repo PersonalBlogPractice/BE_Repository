@@ -1,14 +1,22 @@
 package io.github.tato126.practice.user.controller;
 
+import io.github.tato126.practice.common.dto.ErrorResponse;
 import io.github.tato126.practice.user.dto.request.UserRequest;
 import io.github.tato126.practice.user.dto.response.LoginResponse;
 import io.github.tato126.practice.user.dto.response.UserResponse;
 import io.github.tato126.practice.user.service.UserLoginService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+@Tag(name = "Auth", description = "인증 API - 회원가입, 로그인")
 @RequiredArgsConstructor
 @RequestMapping("/api/auth")
 @RestController
@@ -16,14 +24,54 @@ public class UserLoginController {
 
     private final UserLoginService userService;
 
-    // signup
+    @Operation(
+            summary = "회원가입",
+            description = "새로운 사용자를 등록합니다. 이메일은 고유해야 하며, 비밀번호는 암호화되어 저장됩니다."
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "회원가입 성공",
+                    content = @Content(schema = @Schema(implementation = UserResponse.class))
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "입력값 검증 실패",
+                    content = @Content(schema = @Schema(implementation = ErrorResponse.class))
+            ),
+            @ApiResponse(
+                    responseCode = "409",
+                    description = "이미 존재하는 이메일",
+                    content = @Content(schema = @Schema(implementation = ErrorResponse.class))
+            )
+    })
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/signup")
-    public UserResponse signup(@RequestBody UserRequest request) {
+    public UserResponse signup(@Valid @RequestBody UserRequest request) {
         return userService.signup(request);
     }
 
-    // login
+    @Operation(
+            summary = "로그인",
+            description = "이메일과 비밀번호로 로그인하여 JWT 액세스 토큰을 발급받습니다."
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "로그인 성공",
+                    content = @Content(schema = @Schema(implementation = LoginResponse.class))
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "입력값 검증 실패",
+                    content = @Content(schema = @Schema(implementation = ErrorResponse.class))
+            ),
+            @ApiResponse(
+                    responseCode = "401",
+                    description = "이메일 또는 비밀번호 불일치",
+                    content = @Content(schema = @Schema(implementation = ErrorResponse.class))
+            )
+    })
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/login")
     public LoginResponse login(@Valid @RequestBody UserRequest request) {
