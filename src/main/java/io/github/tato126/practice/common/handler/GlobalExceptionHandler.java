@@ -117,7 +117,7 @@ public class GlobalExceptionHandler {
         );
     }
 
-    // 로그인 실패
+    // 로그인 실패 (이메일/비밀번호 오류 통합)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(InvalidCredentialsException.class)
     public ErrorResponse handleInvalidCredentialsException(InvalidCredentialsException e) {
