@@ -112,7 +112,7 @@ public class GlobalExceptionHandler {
         log.error("InvalidPasswordException: {}", e.getMessage());
         return ErrorResponse.of(
                 e.getMessage(),
-                HttpStatus.BAD_REQUEST.value(),
+                HttpStatus.UNAUTHORIZED.value(),
                 "INVALID_PASSWORD"
         );
     }
@@ -124,7 +124,7 @@ public class GlobalExceptionHandler {
         log.error("InvalidCredentialsException: {}", e.getMessage());
         return ErrorResponse.of(
                 e.getMessage(),
-                HttpStatus.BAD_REQUEST.value(),
+                HttpStatus.UNAUTHORIZED.value(),
                 "INVALID_CREDENTIALS"
         );
     }
