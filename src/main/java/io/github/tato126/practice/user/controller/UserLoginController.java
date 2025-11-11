@@ -30,8 +30,8 @@ public class UserLoginController {
     )
     @ApiResponses({
             @ApiResponse(
-                    responseCode = "200",
-                    description = "회원가입 성공",
+                    responseCode = "201",
+                    description = "회원가입 성공 - 새 사용자 생성됨",
                     content = @Content(schema = @Schema(implementation = UserResponse.class))
             ),
             @ApiResponse(
@@ -45,7 +45,7 @@ public class UserLoginController {
                     content = @Content(schema = @Schema(implementation = ErrorResponse.class))
             )
     })
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/signup")
     public UserResponse signup(@Valid @RequestBody UserRequest request) {
         return userService.signup(request);
