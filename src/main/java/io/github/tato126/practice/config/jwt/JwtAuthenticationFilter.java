@@ -34,11 +34,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
                 // 2. 토큰 검증
                 Claims claims = jwtUtil.validateToken(token);
-                Long userId = claims.get("userId", Long.class);
+                String email = claims.get("email", String.class);
 
                 // 3. Spring Security 인증 객체 생성
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-                        userId,
+                        email,  // Principal에 이메일 설정
                         null,
                         new ArrayList<>()
                 );
