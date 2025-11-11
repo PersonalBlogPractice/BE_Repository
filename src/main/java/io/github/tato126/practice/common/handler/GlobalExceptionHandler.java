@@ -3,6 +3,10 @@ package io.github.tato126.practice.common.handler;
 import io.github.tato126.practice.common.dto.ErrorResponse;
 import io.github.tato126.practice.common.excetion.PostAccessDeniedException;
 import io.github.tato126.practice.common.excetion.PostNotFoundException;
+import io.github.tato126.practice.common.excetion.login.DuplicateEmailException;
+import io.github.tato126.practice.common.excetion.login.InvalidCredentialsException;
+import io.github.tato126.practice.common.excetion.login.InvalidPasswordException;
+import io.github.tato126.practice.common.excetion.login.UserNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
@@ -74,6 +78,54 @@ public class GlobalExceptionHandler {
                 "서버 내부 오류가 발생했습니다.",
                 HttpStatus.INTERNAL_SERVER_ERROR.value(),
                 "INTERNAL_SERVER_ERROR"
+        );
+    }
+
+    // 사용자를 찾을 수 없음
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(UserNotFoundException.class)
+    public ErrorResponse handleUserNotFoundException(UserNotFoundException e) {
+        log.error("UserNotFoundException: {}", e.getMessage());
+        return ErrorResponse.of(
+                e.getMessage(),
+                HttpStatus.NOT_FOUND.value(),
+                "USER_NOT_FOUND"
+        );
+    }
+
+    // 이메일 중복
+    @ResponseStatus(HttpStatus.CONFLICT)
+    @ExceptionHandler(DuplicateEmailException.class)
+    public ErrorResponse handleDuplicateEmailException(DuplicateEmailException e) {
+        log.error("DuplicateEmailException: {}", e.getMessage());
+        return ErrorResponse.of(
+                e.getMessage(),
+                HttpStatus.CONFLICT.value(),
+                "DUPLICATE_EMAIL"
+        );
+    }
+
+    // 비밀번호 불일치
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ExceptionHandler(InvalidPasswordException.class)
+    public ErrorResponse handleInvalidPasswordException(InvalidPasswordException e) {
+        log.error("InvalidPasswordException: {}", e.getMessage());
+        return ErrorResponse.of(
+                e.getMessage(),
+                HttpStatus.UNAUTHORIZED.value(),
+                "INVALID_PASSWORD"
+        );
+    }
+
+    // 로그인 실패 (이메일/비밀번호 오류 통합)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ExceptionHandler(InvalidCredentialsException.class)
+    public ErrorResponse handleInvalidCredentialsException(InvalidCredentialsException e) {
+        log.error("InvalidCredentialsException: {}", e.getMessage());
+        return ErrorResponse.of(
+                e.getMessage(),
+                HttpStatus.UNAUTHORIZED.value(),
+                "INVALID_CREDENTIALS"
         );
     }
 }
