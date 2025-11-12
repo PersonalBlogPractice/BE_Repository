@@ -11,6 +11,16 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
+/**
+ * 블로그 게시글 정보를 관리하는 엔티티 클래스입니다.
+ * <p>
+ * 제목, 내용, 작성자명, 게시 상태(DRAFT/PUBLISHED) 등의 게시글 정보를 저장합니다.
+ * JPA Auditing을 통해 생성일시와 수정일시가 자동으로 관리됩니다.
+ * </p>
+ *
+ * @author tato126
+ * @since 1.0
+ */
 @Getter
 @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)

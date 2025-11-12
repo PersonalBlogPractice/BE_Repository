@@ -17,6 +17,16 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.List;
 
+/**
+ * 애플리케이션 전역 예외를 처리하는 핸들러 클래스입니다.
+ * <p>
+ * {@code @RestControllerAdvice}를 통해 모든 컨트롤러에서 발생하는 예외를 중앙 집중식으로 처리합니다.
+ * 각 예외 타입에 맞는 HTTP 상태 코드와 통일된 형식의 오류 응답(ErrorResponse)을 반환합니다.
+ * </p>
+ *
+ * @author tato126
+ * @since 1.0
+ */
 @Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler {

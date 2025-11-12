@@ -4,6 +4,18 @@ import io.github.tato126.practice.user.entity.User;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 
+/**
+ * 로그인 성공 응답 DTO입니다.
+ * <p>
+ * 로그인 성공 시 사용자 정보와 함께 JWT 액세스 토큰을 반환합니다.
+ * 클라이언트는 이 토큰을 Authorization 헤더에 Bearer 형식으로 포함하여 인증된 요청을 수행합니다.
+ * </p>
+ *
+ * @param user        사용자 정보
+ * @param accessToken JWT 액세스 토큰
+ * @author tato126
+ * @since 1.0
+ */
 @Schema(description = "로그인 성공 응답 DTO")
 @Builder
 public record LoginResponse(

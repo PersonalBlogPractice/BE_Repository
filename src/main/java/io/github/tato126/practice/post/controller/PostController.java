@@ -15,6 +15,15 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * 게시글 관련 HTTP 요청을 처리하는 컨트롤러 클래스입니다.
+ * <p>
+ * 게시글 생성, 목록 조회, 상세 조회 등의 REST API 엔드포인트를 제공합니다.
+ * </p>
+ *
+ * @author tato126
+ * @since 1.0
+ */
 @Tag(name = "포스트", description = "포스트 관리 API")
 @RequiredArgsConstructor
 @RequestMapping("/api/posts")
