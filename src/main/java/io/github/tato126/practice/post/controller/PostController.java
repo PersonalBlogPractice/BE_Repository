@@ -50,7 +50,7 @@ public class PostController {
     public PostResponse updatePost(
             @PathVariable Long id,
             @Valid @RequestBody PostUpdateRequest postUpdateRequest,
-            @Parameter(hidden = true) @org.springframework.security.core.annotation.AuthenticationPrincipal String userEmail
+            @Parameter(hidden = true) @AuthenticationPrincipal String userEmail
     ) {
         return postService.update(id, postUpdateRequest, userEmail);
     }
