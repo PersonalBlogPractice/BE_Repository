@@ -72,7 +72,6 @@ public class PostController {
     @ResponseStatus(HttpStatus.OK)
     @GetMapping
     public Page<PostResponse> getPosts(
-            @Parameter(description = "페이지 번호 (0부터 시작)", example = "0")
             @PageableDefault(size = 20, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable
     ) {
         return postService.findAllPosts(pageable);
