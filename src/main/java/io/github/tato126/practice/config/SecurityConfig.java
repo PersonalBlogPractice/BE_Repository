@@ -4,6 +4,7 @@ import io.github.tato126.practice.config.jwt.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -47,13 +48,12 @@ public class SecurityConfig {
         http
             .csrf(csrf -> csrf.disable())  // REST API이므로 CSRF 비활성화
             .authorizeHttpRequests(auth -> auth
-                // Phase 1: 모든 요청 허용
-                .requestMatchers("/h2-console/**", "/swagger-ui/**", "/api-docs/**").permitAll()
-                .anyRequest().permitAll()
-
-                // Phase 2: 인증 적용 시 아래 주석 해제
-                // .requestMatchers("/api/auth/**", "/h2-console/**", "/swagger-ui/**").permitAll()
-                // .anyRequest().authenticated()
+                // 인증 없이 접근 가능한 엔드포인트
+                .requestMatchers("/api/auth/**", "/h2-console/**", "/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/posts", "/api/posts/**").permitAll()  // 게시글 조회만 허용
+                .requestMatchers(HttpMethod.GET, "/api/users/**").permitAll()  // 사용자 프로필 조회 허용
+                // 나머지는 인증 필요 (POST, PUT, DELETE)
+                .anyRequest().authenticated()
             )
             .headers(headers -> headers
                 .frameOptions(frame -> frame.sameOrigin())  // H2 Console 사용을 위해
