@@ -1,4 +1,4 @@
-package io.github.tato126.practice.common.excetion;
+package io.github.tato126.practice.common.excetion.post;
 
 /**
  * 게시글을 찾을 수 없을 때 발생하는 예외입니다.

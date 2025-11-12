@@ -1,12 +1,12 @@
 package io.github.tato126.practice.common.handler;
 
 import io.github.tato126.practice.common.dto.ErrorResponse;
-import io.github.tato126.practice.common.excetion.PostAccessDeniedException;
-import io.github.tato126.practice.common.excetion.PostNotFoundException;
 import io.github.tato126.practice.common.excetion.login.DuplicateEmailException;
 import io.github.tato126.practice.common.excetion.login.InvalidCredentialsException;
 import io.github.tato126.practice.common.excetion.login.InvalidPasswordException;
 import io.github.tato126.practice.common.excetion.login.UserNotFoundException;
+import io.github.tato126.practice.common.excetion.post.PostAccessDeniedException;
+import io.github.tato126.practice.common.excetion.post.PostNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
