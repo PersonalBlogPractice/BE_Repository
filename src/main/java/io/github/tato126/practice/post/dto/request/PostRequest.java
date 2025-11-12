@@ -4,6 +4,18 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Builder;
 
+/**
+ * 게시글 생성/수정 요청 DTO입니다.
+ * <p>
+ * 클라이언트로부터 게시글 정보를 받아올 때 사용합니다.
+ * 제목과 내용에 대한 유효성 검증을 수행합니다.
+ * </p>
+ *
+ * @param title   게시글 제목 (3~20자)
+ * @param content 게시글 내용 (5~250자)
+ * @author tato126
+ * @since 1.0
+ */
 @Builder
 public record PostRequest(
 

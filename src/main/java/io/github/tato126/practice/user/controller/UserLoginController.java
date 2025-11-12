@@ -16,6 +16,16 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * 사용자 인증 관련 HTTP 요청을 처리하는 컨트롤러 클래스입니다.
+ * <p>
+ * 회원가입, 로그인 등의 REST API 엔드포인트를 제공하며,
+ * JWT 토큰 발급 기능을 담당합니다.
+ * </p>
+ *
+ * @author tato126
+ * @since 1.0
+ */
 @Tag(name = "Auth", description = "인증 API - 회원가입, 로그인")
 @RequiredArgsConstructor
 @RequestMapping("/api/auth")

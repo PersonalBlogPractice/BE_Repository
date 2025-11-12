@@ -7,6 +7,21 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Builder;
 
+/**
+ * 사용자 회원가입/로그인 요청 DTO입니다.
+ * <p>
+ * 클라이언트로부터 사용자 정보를 받아올 때 사용합니다.
+ * 이메일, 비밀번호, 닉네임, 자기소개 정보를 포함하며,
+ * 로그인 시에는 이메일과 비밀번호만 필수입니다.
+ * </p>
+ *
+ * @param email    사용자 이메일 (필수, 이메일 형식)
+ * @param password 비밀번호 (필수, 8자 이상)
+ * @param nickname 닉네임 (선택)
+ * @param bio      자기소개 (선택)
+ * @author tato126
+ * @since 1.0
+ */
 @Schema(description = "회원가입/로그인 요청 DTO")
 @Builder
 public record UserRequest(
