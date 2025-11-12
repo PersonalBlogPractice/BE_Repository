@@ -1,6 +1,7 @@
 package io.github.tato126.practice.post.controller;
 
 import io.github.tato126.practice.post.dto.request.PostRequest;
+import io.github.tato126.practice.post.dto.request.PostUpdateRequest;
 import io.github.tato126.practice.post.dto.response.PostResponse;
 import io.github.tato126.practice.post.service.PostService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -13,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -32,11 +34,35 @@ public class PostController {
 
     private final PostService postService;
 
-    @Operation(summary = "포스트 생성", description = "새로운 포스트를 생성합니다.")
+    @Operation(summary = "포스트 생성", description = "새로운 포스트를 생성합니다. (인증 필요)")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public PostResponse createPost(@Valid @RequestBody PostRequest postRequest) {
-        return postService.register(postRequest);
+    public PostResponse createPost(
+            @Valid @RequestBody PostRequest postRequest,
+            @Parameter(hidden = true) @AuthenticationPrincipal String userEmail
+    ) {
+        return postService.register(postRequest, userEmail);
+    }
+
+    @Operation(summary = "포스트 수정", description = "포스트를 수정합니다. (작성자 본인만 가능)")
+    @ResponseStatus(HttpStatus.OK)
+    @PutMapping("/{id}")
+    public PostResponse updatePost(
+            @PathVariable Long id,
+            @Valid @RequestBody PostUpdateRequest postUpdateRequest,
+            @Parameter(hidden = true) @org.springframework.security.core.annotation.AuthenticationPrincipal String userEmail
+    ) {
+        return postService.update(id, postUpdateRequest, userEmail);
+    }
+
+    @Operation(summary = "포스트 삭제", description = "포스트를 삭제합니다. (작성자 본인만 가능)")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping("/{id}")
+    public void deletePost(
+            @PathVariable Long id,
+            @Parameter(hidden = true) @org.springframework.security.core.annotation.AuthenticationPrincipal String userEmail
+    ) {
+        postService.delete(id, userEmail);
     }
 
     @Operation(

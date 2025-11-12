@@ -38,7 +38,7 @@ public class Post {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    private User author;
 
     @Enumerated(EnumType.STRING)
     private PostStatus status = PostStatus.DRAFT;
@@ -54,18 +54,24 @@ public class Post {
         PUBLISHED
     }
 
-    @Builder
-    public Post(String title, String content, User user, PostStatus status) {
+    public void update(String title, String content) {
         this.title = title;
         this.content = content;
-        this.user = user;
+    }
+
+    @Builder
+    public Post(String title, String content, User author, PostStatus status) {
+        this.title = title;
+        this.content = content;
+        this.author = author;
         this.status = (status != null) ? status : PostStatus.DRAFT;
     }
 
-    public static Post form(PostRequest request) {
+    public static Post form(PostRequest request, User author) {
         return Post.builder()
                 .title(request.title())
                 .content(request.content())
+                .author(author)
                 .build();
     }
 }
