@@ -1,6 +1,7 @@
 package io.github.tato126.practice.post.entity;
 
 import io.github.tato126.practice.post.dto.request.PostRequest;
+import io.github.tato126.practice.user.entity.User;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -35,7 +36,9 @@ public class Post {
 
     private String content;
 
-    private String authorName;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     @Enumerated(EnumType.STRING)
     private PostStatus status = PostStatus.DRAFT;
@@ -52,10 +55,10 @@ public class Post {
     }
 
     @Builder
-    public Post(String title, String content, String authorName, PostStatus status) {
+    public Post(String title, String content, User user, PostStatus status) {
         this.title = title;
         this.content = content;
-        this.authorName = (authorName != null) ? authorName : "nameIsNull";
+        this.user = user;
         this.status = (status != null) ? status : PostStatus.DRAFT;
     }
 

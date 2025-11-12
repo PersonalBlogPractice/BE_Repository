@@ -15,7 +15,8 @@ import java.time.LocalDateTime;
  * @param id        게시글 ID
  * @param title     게시글 제목
  * @param content   게시글 내용
- * @param author    작성자명
+ * @param userId    작성자 아이디
+ * @param nickname  작성자명
  * @param status    게시 상태 (DRAFT/PUBLISHED)
  * @param createdAt 생성일시
  * @param updatedAt 수정일시
@@ -27,7 +28,8 @@ public record PostResponse(
         Long id,
         String title,
         String content,
-        String author,
+        Long userId,
+        String nickname,
         Post.PostStatus status,
         LocalDateTime createdAt,
         LocalDateTime updatedAt
@@ -45,7 +47,8 @@ public record PostResponse(
                 .id(post.getId())
                 .title(post.getTitle())
                 .content(post.getContent())
-                .author(post.getAuthorName())
+                .userId(post.getUser().getId())
+                .nickname(post.getUser().getUsername())
                 .status(post.getStatus())
                 .createdAt(post.getCreatedAt())
                 .updatedAt(post.getUpdatedAt())
