@@ -1,6 +1,8 @@
 package io.github.tato126.practice.common.handler;
 
 import io.github.tato126.practice.common.dto.ErrorResponse;
+import io.github.tato126.practice.common.excetion.comment.CommentAccessDeniedException;
+import io.github.tato126.practice.common.excetion.comment.CommentNotFoundException;
 import io.github.tato126.practice.common.excetion.login.DuplicateEmailException;
 import io.github.tato126.practice.common.excetion.login.InvalidCredentialsException;
 import io.github.tato126.practice.common.excetion.login.InvalidPasswordException;
@@ -136,6 +138,30 @@ public class GlobalExceptionHandler {
                 e.getMessage(),
                 HttpStatus.UNAUTHORIZED.value(),
                 "INVALID_CREDENTIALS"
+        );
+    }
+
+    // 댓글을 찾을 수 없음
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(CommentNotFoundException.class)
+    public ErrorResponse handleCommentNotFoundException(CommentNotFoundException e) {
+        log.error("CommentNotFoundException: {}", e.getMessage());
+        return ErrorResponse.of(
+                e.getMessage(),
+                HttpStatus.NOT_FOUND.value(),
+                "COMMENT_NOT_FOUND"
+        );
+    }
+
+    // 댓글 접근 권한 없음
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    @ExceptionHandler(CommentAccessDeniedException.class)
+    public ErrorResponse handleCommentAccessDeniedException(CommentAccessDeniedException e) {
+        log.error("CommentAccessDeniedException: {}", e.getMessage());
+        return ErrorResponse.of(
+                e.getMessage(),
+                HttpStatus.FORBIDDEN.value(),
+                "COMMENT_ACCESS_DENIED"
         );
     }
 }
