@@ -13,7 +13,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -40,7 +40,7 @@ public class UserProfileController {
      * JWT 토큰을 통해 인증된 사용자의 정보를 반환합니다.
      * </p>
      *
-     * @param authentication Spring Security 인증 정보 (JWT 필터에서 설정)
+     * @param userEmail JWT 토큰에서 추출된 사용자 이메일
      * @return 사용자 프로필 정보
      */
     @Operation(
@@ -67,15 +67,11 @@ public class UserProfileController {
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/api/auth/me")
     public UserResponse getMyProfile(
-            @Parameter(hidden = true) Authentication authentication
+            @Parameter(hidden = true) @AuthenticationPrincipal String userEmail
     ) {
+        log.debug("getMyProfile email: {}", userEmail);
 
-        // jwt 필터가 인증 완료한 사용자 아이디 추출
-        String email = authentication.getName();
-
-        log.debug("getMyProfile email: {}", email);
-
-        return profileService.getUserProfileByEmail(email);
+        return profileService.getUserProfileByEmail(userEmail);
     }
 
     /**

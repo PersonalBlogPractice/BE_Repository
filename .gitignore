@@ -87,6 +87,9 @@ Thumbs.db
 /temp/
 /tmp/
 
+### Documentation ###
+doc/
+
 ### Claude ###
 CLAUDE.md
 .claude
