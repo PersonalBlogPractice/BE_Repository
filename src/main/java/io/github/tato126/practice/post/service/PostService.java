@@ -59,8 +59,11 @@ public class PostService {
         // 2. 게시글 생성 (작성자 설정)
         Post newPost = Post.form(request, author);
 
+        // 3. 게시글 공개 설정
+
         // 3. 저장
         postRepository.save(newPost);
+
 
         log.debug("Post created: {}", newPost.getId());
 
@@ -98,7 +101,7 @@ public class PostService {
         }
 
         // 4. 게시글 수정 (더티 체킹)
-        post.update(postUpdateRequest.title(), postUpdateRequest.content());
+        post.update(postUpdateRequest.title(), postUpdateRequest.content(), postUpdateRequest.status());
 
         log.debug("Post updated: {}", post.getId());
 

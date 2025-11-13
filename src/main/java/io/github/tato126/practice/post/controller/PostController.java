@@ -60,7 +60,7 @@ public class PostController {
     @DeleteMapping("/{id}")
     public void deletePost(
             @PathVariable Long id,
-            @Parameter(hidden = true) @org.springframework.security.core.annotation.AuthenticationPrincipal String userEmail
+            @Parameter(hidden = true) @AuthenticationPrincipal String userEmail
     ) {
         postService.delete(id, userEmail);
     }

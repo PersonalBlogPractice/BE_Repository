@@ -54,9 +54,16 @@ public class Post {
         PUBLISHED
     }
 
-    public void update(String title, String content) {
-        this.title = title;
-        this.content = content;
+    public void update(String title, String content, PostStatus status) {
+        if (title != null) {
+            this.title = title;
+        }
+        if (content != null) {
+            this.content = content;
+        }
+        if (status != null) {
+            this.status = status;
+        }
     }
 
     @Builder
@@ -72,6 +79,7 @@ public class Post {
                 .title(request.title())
                 .content(request.content())
                 .author(author)
+                .status(request.status())
                 .build();
     }
 }
