@@ -49,6 +49,14 @@ public class Comment {
         this.isDeleted = isDeleted;
     }
 
+    public void update(String comment) {
+        this.content = comment;
+    }
+
+    public void delete() {
+        this.isDeleted = true;
+    }
+
     public static Comment form(Post post, CommentRequest commentRequest, User user) {
         return Comment.builder()
                 .content(commentRequest.content())
